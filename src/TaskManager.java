@@ -4,7 +4,6 @@ import java.util.Map;
 
 public class TaskManager {
 
-    private static int count = 0;
     private Map<Integer, Task> tasks = new HashMap<>();
     private Map<Integer, Epic> epics = new HashMap<>();
     private Map<Integer, Subtask> subtasks = new HashMap<>();
@@ -13,8 +12,25 @@ public class TaskManager {
         if (tasks.containsValue(task)) {
             System.out.println("Такая задача уже существует!");
         } else {
-            tasks.put(count, task);
-            count++;
+            tasks.put(task.getId(), task);
+        }
+    }
+
+    public void addEpic(Epic epic) {
+        if (epics.containsValue(epic)) {
+            System.out.println("Такой эпик уже существует!");
+        } else {
+            epics.put(epic.getId(), epic);
+        }
+    }
+
+    public void addSubtask(Epic epic, Subtask subtask) {
+        ArrayList<Subtask> subtaskList = epic.getSubtaskList();
+        if (subtaskList.contains(subtask)) {
+            System.out.println("В указанном эпике уже есть такая подзадача!");
+        } else {
+            epic.addSubtask(subtask);
+            subtasks.put(subtask.getId(), subtask);
         }
     }
 
@@ -40,5 +56,8 @@ public class TaskManager {
 
     public void deleteSubtasks() {
         subtasks.clear();
+        for (Epic epic : epics.values()) {
+            epic.clearSubtasks();
+        }
     }
 }

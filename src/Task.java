@@ -57,7 +57,15 @@ public class Task {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, id, status);
+        int hash = 17;
+        if (name != null) {
+            hash = hash + name.hashCode();
+        }
+        hash = hash * 31;
+        if (description != null) {
+            hash = hash + description.hashCode();
+        }
+        return hash;
     }
 
     @Override
