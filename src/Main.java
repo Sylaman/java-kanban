@@ -6,14 +6,27 @@ public class Main {
 
         TaskManager taskManager = new TaskManager();
 
-        taskManager.addTask(new Task("Убраться", "Протереть пыль и помыть полы"));
-        taskManager.addTask(new Task("Полить цветы", "Не забыть про кактус на кухне"));
+        Task waterFlowers = new Task("Полить цветы", "Не забыть про кактус на кухне");
+        Task washFloor = new Task("Помыть полы", "С новым средством");
+        washFloor.setStatus(Status.IN_PROGRESS);
+        taskManager.addTask(washFloor);
+        taskManager.addTask(waterFlowers);
 
         Epic flatRenovation = new Epic("Сделать ремонт", "Нужно успеть за отпуск");
         Subtask flatRenovationSubtask1 = new Subtask("Поклеить обои", "Обязательно светлые!");
-
+        Subtask flatRenovationSubtask2 = new Subtask("Установить новую технику", "Старую продать на Авито");
         taskManager.addEpic(flatRenovation);
         taskManager.addSubtask(flatRenovation, flatRenovationSubtask1);
+        taskManager.addSubtask(flatRenovation, flatRenovationSubtask2);
+        flatRenovationSubtask1.setStatus(Status.DONE);
+        taskManager.updateSubtask(flatRenovationSubtask1);
+
+        Epic learnJava = new Epic("Пройти курс Java-разработки", "Заниматься 15 часов в неделю");
+        Subtask learnJavaSubtask1 = new Subtask("Разобраться с ООП", "Что еще за наследование?");
+        taskManager.addEpic(learnJava);
+        taskManager.addSubtask(learnJava, learnJavaSubtask1);
+        learnJavaSubtask1.setStatus(Status.DONE);
+        taskManager.updateSubtask(learnJavaSubtask1);
 
 
         ArrayList<Task> tasks = taskManager.getTasks();
@@ -31,13 +44,14 @@ public class Main {
             System.out.println(subtask);
         }
 
-        taskManager.deleteTasks();
-        taskManager.deleteEpics();
-        taskManager.deleteSubtasks();
+        System.out.println();
+        System.out.println("Тест после удаления: ");
 
+        taskManager.deleteTaskByID(1703979884);
         System.out.println(taskManager.getTasks());
+
+        taskManager.deleteEpicByID(-823653190);
         System.out.println(taskManager.getEpics());
         System.out.println(taskManager.getSubtasks());
-
     }
 }
