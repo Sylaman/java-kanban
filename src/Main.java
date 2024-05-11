@@ -13,18 +13,23 @@ public class Main {
         taskManager.addTask(waterFlowers);
 
         Epic flatRenovation = new Epic("Сделать ремонт", "Нужно успеть за отпуск");
-        Subtask flatRenovationSubtask1 = new Subtask("Поклеить обои", "Обязательно светлые!");
-        Subtask flatRenovationSubtask2 = new Subtask("Установить новую технику", "Старую продать на Авито");
+        Subtask flatRenovationSubtask1 = new Subtask("Поклеить обои",
+                "Обязательно светлые!",
+                flatRenovation.getId());
+        Subtask flatRenovationSubtask2 = new Subtask("Установить новую технику",
+                "Старую продать на Авито",
+                flatRenovation.getId());
         taskManager.addEpic(flatRenovation);
-        taskManager.addSubtask(flatRenovation, flatRenovationSubtask1);
-        taskManager.addSubtask(flatRenovation, flatRenovationSubtask2);
+        taskManager.addSubtask(flatRenovationSubtask1);
+        taskManager.addSubtask(flatRenovationSubtask2);
         flatRenovationSubtask1.setStatus(Status.DONE);
         taskManager.updateSubtask(flatRenovationSubtask1);
 
         Epic learnJava = new Epic("Пройти курс Java-разработки", "Заниматься 15 часов в неделю");
-        Subtask learnJavaSubtask1 = new Subtask("Разобраться с ООП", "Что еще за наследование?");
+        Subtask learnJavaSubtask1 = new Subtask("Разобраться с ООП",
+                "Что еще за наследование?", learnJava.getId());
         taskManager.addEpic(learnJava);
-        taskManager.addSubtask(learnJava, learnJavaSubtask1);
+        taskManager.addSubtask(learnJavaSubtask1);
         learnJavaSubtask1.setStatus(Status.DONE);
         taskManager.updateSubtask(learnJavaSubtask1);
 
