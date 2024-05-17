@@ -1,7 +1,7 @@
 
 public class Subtask extends Task {
 
-    private int epicID;
+    private final int epicID;
 
     public Subtask(String name, String description, int epicID) {
         super(name, description);
@@ -10,10 +10,6 @@ public class Subtask extends Task {
 
     public int getEpicID() {
         return epicID;
-    }
-
-    public void setEpicID(int epicID) {
-        this.epicID = epicID;
     }
 
     @Override

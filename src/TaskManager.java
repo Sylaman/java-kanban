@@ -137,26 +137,24 @@ public class TaskManager {
 
     // вспомогательный private метод для контроля статуса эпика при удалении или изменении подзадач
     private void updateEpicStatus(Epic epic) {
-        ArrayList<Subtask> subtaskList = epic.getSubtaskList();
-        if (subtaskList.isEmpty()) {
+        int allIsDoneCount = 0;
+        int allIsInNewCount = 0;
+        ArrayList<Subtask> list = epic.getSubtaskList();
+
+        for (Subtask subtask : list) {
+            if (subtask.getStatus() == Status.DONE) {
+                allIsDoneCount++;
+            }
+            if (subtask.getStatus() == Status.NEW) {
+                allIsInNewCount++;
+            }
+        }
+        if (allIsDoneCount == list.size()) {
+            epic.setStatus(Status.DONE);
+        } else if (allIsInNewCount == list.size()) {
             epic.setStatus(Status.NEW);
         } else {
-            int doneSubtasksCount = 0;
-            for (Subtask subtask : subtaskList) {
-                if (subtask.getStatus().equals(Status.DONE)) {
-                    doneSubtasksCount++;
-                } else if (subtask.getStatus().equals(Status.IN_PROGRESS)) {
-                    epic.setStatus(Status.IN_PROGRESS);
-                    break;
-                }
-            }
-            if (doneSubtasksCount == 0) {
-                epic.setStatus(Status.NEW);
-            } else if (doneSubtasksCount == subtaskList.size()) {
-                epic.setStatus(Status.DONE);
-            } else {
-                epic.setStatus(Status.IN_PROGRESS);
-            }
+            epic.setStatus(Status.IN_PROGRESS);
         }
     }
 }
