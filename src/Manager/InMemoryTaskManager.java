@@ -10,9 +10,12 @@ import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
 
+    private static final int MAX_HISTORY_STORAGE = 10;
+
     private final Map<Integer, Task> tasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
+    private final List<Task> historyList = new ArrayList<>();
 
     private int nextID = 1;
 
@@ -102,36 +105,42 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskByID(int id) {
-        return tasks.get(id);
+        Task task = tasks.get(id);
+        addTaskToHistoryList(task);
+        return task;
     }
 
     @Override
     public Epic getEpicByID(int id) {
-        return epics.get(id);
+        Epic epic = epics.get(id);
+        addTaskToHistoryList(epic);
+        return epic;
     }
 
     @Override
     public Subtask getSubtaskByID(int id) {
-        return subtasks.get(id);
+        Subtask subtask = subtasks.get(id);
+        addTaskToHistoryList(subtask);
+        return subtask;
     }
 
     @Override
-    public ArrayList<Task> getTasks() {
+    public List<Task> getTasks() {
         return new ArrayList<>(tasks.values());
     }
 
     @Override
-    public ArrayList<Epic> getEpics() {
+    public List<Epic> getEpics() {
         return new ArrayList<>(epics.values());
     }
 
     @Override
-    public ArrayList<Subtask> getSubtasks() {
+    public List<Subtask> getSubtasks() {
         return new ArrayList<>(subtasks.values());
     }
 
     @Override
-    public ArrayList<Subtask> getEpicSubtasks(Epic epic) {
+    public List<Subtask> getEpicSubtasks(Epic epic) {
         return epic.getSubtaskList();
     }
 
@@ -180,6 +189,18 @@ public class InMemoryTaskManager implements TaskManager {
         subtaskList.remove(subtask);
         epic.setSubtaskList(subtaskList);
         updateEpicStatus(epic);
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return historyList;
+    }
+
+    private void addTaskToHistoryList(Task task) {
+        if (historyList.size() == MAX_HISTORY_STORAGE) {
+            historyList.remove(0);
+        }
+        historyList.add(task);
     }
 
     // вспомогательный private метод для контроля статуса эпика при удалении или изменении подзадач
