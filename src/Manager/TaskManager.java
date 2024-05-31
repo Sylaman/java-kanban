@@ -1,4 +1,11 @@
+package Manager;
+
+import Task.Task;
+import Task.Epic;
+import Task.Subtask;
+
 import java.util.ArrayList;
+
 
 public interface TaskManager {
     int getNextID();

@@ -1,3 +1,11 @@
+package Manager;
+
+import Task.Task;
+import Task.Epic;
+import Task.Subtask;
+import Status.Status;
+
+
 import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
