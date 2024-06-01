@@ -170,30 +170,34 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void deleteTaskByID(int id) {
-        tasks.remove(id);
+    public Task deleteTaskByID(int id) {
+        return tasks.remove(id);
     }
 
     @Override
-    public void deleteEpicByID(int id) {
+    public Epic deleteEpicByID(int id) {
         ArrayList<Subtask> epicSubtasks = epics.get(id).getSubtaskList();
-        epics.remove(id);
         for (Subtask subtask : epicSubtasks) {
             subtasks.remove(subtask.getId());
         }
+        return epics.remove(id);
     }
 
     @Override
-    public void deleteSubtaskByID(int id) {
+    public Subtask deleteSubtaskByID(int id) {
+        if (!subtasks.containsKey(id)) {
+            return null;
+        }
         Subtask subtask = subtasks.get(id);
         int epicID = subtask.getEpicID();
-        subtasks.remove(id);
+        Subtask detetedSubtask = subtasks.remove(id);
         // обновляем список подзадач и статус эпика
         Epic epic = epics.get(epicID);
         ArrayList<Subtask> subtaskList = epic.getSubtaskList();
         subtaskList.remove(subtask);
         epic.setSubtaskList(subtaskList);
         updateEpicStatus(epic);
+        return detetedSubtask;
     }
 
     @Override
