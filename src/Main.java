@@ -44,10 +44,10 @@ public class Main {
             System.out.println(task);
         }
         System.out.println("Эпики:");
-        for (Task epic : manager.getEpics()) {
+        for (Epic epic : manager.getEpics()) {
             System.out.println(epic);
 
-            for (Task task : manager.getEpicSubtasks((Epic) epic)) {
+            for (Task task : manager.getEpicSubtasks(epic)) {
                 System.out.println("--> " + task);
             }
         }
