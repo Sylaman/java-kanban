@@ -1,4 +1,4 @@
-import manager.InMemoryTaskManager;
+import manager.Managers;
 import manager.TaskManager;
 import status.Status;
 import task.Task;
@@ -7,10 +7,16 @@ import task.Subtask;
 
 public class Main {
 
+    private static final TaskManager inMemoryTaskManager = Managers.getDefault();
+
     public static void main(String[] args) {
 
-        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
+        addTasks();
+        printAllTasks();
+        printViewHistory();
+    }
 
+    private static void addTasks() {
         Task washFloor = new Task("Помыть полы", "С новым средством");
         inMemoryTaskManager.addTask(washFloor);
 
@@ -33,48 +39,45 @@ public class Main {
         inMemoryTaskManager.addSubtask(flatRenovationSubtask3);
         flatRenovationSubtask2.setStatus(Status.DONE);
         inMemoryTaskManager.updateSubtask(flatRenovationSubtask2);
-
-        printAllTasks(inMemoryTaskManager);
-        printViewHistory(inMemoryTaskManager);
     }
 
-    private static void printAllTasks(TaskManager manager) {
+    private static void printAllTasks() {
         System.out.println("Задачи:");
-        for (Task task : manager.getTasks()) {
+        for (Task task : Main.inMemoryTaskManager.getTasks()) {
             System.out.println(task);
         }
         System.out.println("Эпики:");
-        for (Epic epic : manager.getEpics()) {
+        for (Epic epic : Main.inMemoryTaskManager.getEpics()) {
             System.out.println(epic);
 
-            for (Task task : manager.getEpicSubtasks(epic)) {
+            for (Task task : Main.inMemoryTaskManager.getEpicSubtasks(epic)) {
                 System.out.println("--> " + task);
             }
         }
 
         System.out.println("Подзадачи:");
-        for (Task subtask : manager.getSubtasks()) {
+        for (Task subtask : Main.inMemoryTaskManager.getSubtasks()) {
             System.out.println(subtask);
         }
     }
 
-    private static void printViewHistory(TaskManager manager) {
+    private static void printViewHistory() {
         //просматриваем 11 задач, в истории должны отобразиться последние 10
-        manager.getTaskByID(1);
-        manager.getTaskByID(2);
-        manager.getEpicByID(3);
-        manager.getTaskByID(1);
-        manager.getSubtaskByID(4);
-        manager.getSubtaskByID(5);
-        manager.getSubtaskByID(6);
-        manager.getEpicByID(3);
-        manager.getSubtaskByID(4);
-        manager.getTaskByID(2);
-        manager.getSubtaskByID(6);
+        Main.inMemoryTaskManager.getTaskByID(1);
+        Main.inMemoryTaskManager.getTaskByID(2);
+        Main.inMemoryTaskManager.getEpicByID(3);
+        Main.inMemoryTaskManager.getTaskByID(1);
+        Main.inMemoryTaskManager.getSubtaskByID(4);
+        Main.inMemoryTaskManager.getSubtaskByID(5);
+        Main.inMemoryTaskManager.getSubtaskByID(6);
+        Main.inMemoryTaskManager.getEpicByID(3);
+        Main.inMemoryTaskManager.getSubtaskByID(4);
+        Main.inMemoryTaskManager.getTaskByID(2);
+        Main.inMemoryTaskManager.getSubtaskByID(6);
 
         System.out.println();
         System.out.println("История просмотров:");
-        for (Task task : manager.getHistory()) {
+        for (Task task : Main.inMemoryTaskManager.getHistory()) {
             System.out.println(task);
         }
     }
