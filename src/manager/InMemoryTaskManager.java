@@ -1,9 +1,9 @@
-package Manager;
+package manager;
 
-import Task.Task;
-import Task.Epic;
-import Task.Subtask;
-import Status.Status;
+import task.Task;
+import task.Epic;
+import task.Subtask;
+import status.Status;
 
 
 import java.util.*;
