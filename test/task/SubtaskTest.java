@@ -1,7 +1,7 @@
 package task;
 
 import org.junit.jupiter.api.Test;
-import status.Status;
+import enums.Status;
 
 import static org.junit.jupiter.api.Assertions.*;
 

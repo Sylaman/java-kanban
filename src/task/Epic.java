@@ -2,7 +2,7 @@ package task;
 
 import java.util.ArrayList;
 
-import status.Status;
+import enums.Status;
 
 public class Epic extends Task {
 

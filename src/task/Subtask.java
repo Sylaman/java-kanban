@@ -1,6 +1,6 @@
 package task;
 
-import status.Status;
+import enums.Status;
 
 
 public class Subtask extends Task {

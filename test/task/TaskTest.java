@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import status.Status;
+import enums.Status;
 
 class TaskTest {
 
